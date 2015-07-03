@@ -20,13 +20,16 @@ zendesk = {
 client = Zendesk(zendesk.get('zendesk_url'), zendesk.get('username'), zendesk.get('token'))
 
 
-def get_product_uuids(tickets):
-    for t in tickets:
-        match = set(pattern.findall(t['description']))
+def get_product_uuid(ticket):
+    try:
+        match = set(pattern.findall(ticket['description']))
         if match:
-            yield match.pop()
+            return match.pop()
+    except Exception as e:
+        import pdb; pdb.set_trace()
+    return None
 
-product_uuids = get_product_uuids(tickets.get('tickets'))
+#product_uuids = get_product_uuid(tickets.get('tickets'))
 
 products = {}
 
@@ -75,22 +78,22 @@ f.writerow(['Zendesk Ticket Nr',
             'Product UUID'])
 
 for ticket in tickets.get('tickets'):
-    product_uuid = get_product_uuids([ticket])
-    for uuid in product_uuid:
-        product = get_product(uuid)
-        #if product:  # uncomment this if you just want tickets with the product in the subject
-        user = get_user(ticket['requester_id'])
+    product_uuid = get_product_uuid(ticket)
 
-        subject = ' '.join(ticket['subject'].encode('utf-8').strip().splitlines()).replace(',', '').replace(';', '')
+    product = get_product(product_uuid)
+    #if product:  # uncomment this if you just want tickets with the product in the subject
+    user = get_user(ticket['requester_id'])
 
-        f.writerow([ticket['id'],
-                    ticket['created_at'],
-                    ticket['status'],
-                    ticket['recipient'].encode('utf-8'),
-                    subject,
-                    user.get('name', user.get('url', 'None')).encode('utf-8'),
-                    user.get('email', user.get('name', user.get('url', 'None'))).encode('utf-8'),
-                    product["brand"]["name"].encode('utf-8'),
-                    product["name"].encode('utf-8'),
-                    product["uuid"]])
+    subject = ' '.join(ticket['subject'].encode('utf-8').strip().splitlines()).replace(',', '').replace(';', '')
+
+    f.writerow([ticket.get('id'),
+                ticket.get('created_at'),
+                ticket.get('status'),
+                ticket.get('recipient'),
+                subject,
+                user.get('name', user.get('url', 'None')).encode('utf-8'),
+                user.get('email', user.get('name', user.get('url', 'None'))).encode('utf-8'),
+                product.get("brand", {}).get("name", '').encode('utf-8'),
+                product.get("name", 'None').encode('utf-8'),
+                product.get("uuid", 'None')])
 
