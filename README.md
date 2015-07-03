@@ -31,3 +31,5 @@ from zen_resolver import ZenResolver
 >>> s.mark_resolved(matches=s.process())  # Mark the tickets in zendesk as solved
 423 6dce72d9-6375-41a6-90fc-f6ffdcd81fb6 {'name': u'JackAndJill', 'email': u'jackandjill@ranupthehill.net'}
 ```
+
+logs to zen-resolver.log
