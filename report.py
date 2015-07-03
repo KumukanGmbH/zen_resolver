@@ -42,7 +42,6 @@ def get_user(user_id):
 
     user = client.end_user_show(id=user_id)
     if user:
-        import pdb;pdb.set_trace()
         return user
 
     return {}
@@ -70,7 +69,7 @@ for ticket in tickets.get('tickets'):
     product_uuid = get_product_uuids([ticket])
     for uuid in product_uuid:
         product = get_product(uuid)
-        #if product:
+        #if product:  # uncomment this if you just want tickets with the product in the subject
         user = get_user(ticket['requester_id'])
 
         f.writerow([ticket['id'],

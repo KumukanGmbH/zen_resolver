@@ -33,8 +33,8 @@ from zen_resolver import ZenResolver
 423 6dce72d9-6375-41a6-90fc-f6ffdcd81fb6 {'name': u'JackAndJill', 'email': u'jackandjill@ranupthehill.net'}
 ```
 
-Loggin:
--------
+Logging:
+--------
 
 logs to zen-resolver.log
 
@@ -42,8 +42,10 @@ logs to zen-resolver.log
 Report for Jane
 ---------------
 
-python report.py
-
+```
+python update_json_files.py  # get the latest json data from zendesk
+python report.py  # build the report.csv
+```
 
 Testing
 -------
