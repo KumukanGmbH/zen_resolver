@@ -1,0 +1,142 @@
+{
+  "tickets": [
+    {
+      "via": {
+        "source": {
+          "to": {},
+          "from": {},
+          "rel": null
+        },
+        "channel": "sample_ticket"
+      },
+      "updated_at": "2015-04-26T08:03:52Z",
+      "submitter_id": 2,
+      "assignee_id": 1,
+      "brand_id": 374862,
+      "id": 1,
+      "custom_fields": [],
+      "subject": "Manual Request for MWH 2",
+      "sharing_agreement_ids": [],
+      "collaborator_ids": [],
+      "priority": "high",
+      "satisfaction_rating": null,
+      "type": "incident",
+      "status": "closed",
+      "description": "Hi there,\n\n Somone has requested that we find a missing manual for the \"Monkey Video,\nMWH 2 (6f4b5c88-cdd9-47ec-bb35-68df6d882396)\" product.\n\n Product found at:\nhttps://staging-api.manualone.com/v1/products/6f4b5c88-cdd9-47ec-bb35-68df6d882396/full.json\n\n Google Pre-search include:   - The Book of Barely Imagined Beings:\nNovember 2009 - http://www.barelyimaginedbeings.com/2009_11_01_archive.html\n  - Easy Pdf Publisher - Download -\nhttp://easy-pdf-publisher.en.softonic.com/\n \n Manual Reqest Stats:   - *Total Number Requests*: 1",
+      "tags": [
+        "sample",
+        "zendesk"
+      ],
+      "forum_topic_id": null,
+      "organization_id": null,
+      "due_at": null,
+      "requester_id": 2,
+      "followup_ids": [],
+      "recipient": null,
+      "problem_id": null,
+      "url": "https://manualone.zendesk.com/api/v2/tickets/1.json",
+      "fields": [],
+      "created_at": "2015-04-22T12:21:48Z",
+      "raw_subject": "This is a sample ticket requested and submitted by you",
+      "has_incidents": false,
+      "group_id": 24343562,
+      "external_id": null
+    },
+    {
+      "via": {
+        "source": {
+          "to": {
+            "name": "Kumukan GmbH",
+            "address": "support@manualone.zendesk.com"
+          },
+          "from": {
+            "name": "Jane",
+            "address": null
+          },
+          "rel": null
+        },
+        "channel": "email"
+      },
+      "updated_at": "2015-04-26T08:03:52Z",
+      "submitter_id": 2,
+      "assignee_id": 1,
+      "brand_id": 374862,
+      "id": 2,
+      "custom_fields": [],
+      "subject": "Diese Anleitung möchte bei manualONE dabei sein: [Nokia / Lumia 630 (1d4146da-fb3b-4421-8f78-a9f51ff17016)]",
+      "sharing_agreement_ids": [],
+      "collaborator_ids": [],
+      "priority": "high",
+      "satisfaction_rating": null,
+      "type": "question",
+      "status": "closed",
+      "description": "Hallo manualONE!\n\nBeim Ausprobieren eurer Beta-Version habe ich gerade entdeckt, dass zu [Nokia / Lumia 630 (1d4146da-fb3b-4421-8f78-a9f51ff17016)] die Anleitung noch nicht angezeigt wird. Ich würde mich freuen, wenn Ihr die Gebrauchsanweisung noch mit aufnehmen könntet.\nVielleicht hat sie sich ja in Eurer Schublade ganz hinten versteckt?!\n\nSo, weitermachen & frohes Schaffen!\nBesten Dank!",
+      "tags": [],
+      "forum_topic_id": null,
+      "organization_id": null,
+      "due_at": null,
+      "requester_id": 2,
+      "followup_ids": [
+        20,
+        96
+      ],
+      "recipient": "support@manualone.zendesk.com",
+      "problem_id": null,
+      "url": "https://manualone.zendesk.com/api/v2/tickets/2.json",
+      "fields": [],
+      "created_at": "2015-04-22T12:44:10Z",
+      "raw_subject": "Diese Anleitung möchte bei manualONE dabei sein: [Nokia / Lumia 630 (1d4146da-fb3b-4421-8f78-a9f51ff17016)]",
+      "has_incidents": false,
+      "group_id": 24343562,
+      "external_id": null
+    },
+    {
+      "via": {
+        "source": {
+          "to": {
+            "name": "Kumukan GmbH",
+            "address": "woistdieanleitung@manualone.com"
+          },
+          "from": {
+            "name": "Sebastian Hagedorn",
+            "address": "sebastian@iosphere.de"
+          },
+          "rel": null
+        },
+        "channel": "email"
+      },
+      "updated_at": "2015-04-26T08:03:52Z",
+      "submitter_id": 794930541,
+      "assignee_id": 794875711,
+      "brand_id": 374862,
+      "id": 3,
+      "custom_fields": [],
+      "subject": "A ticket with no match",
+      "sharing_agreement_ids": [],
+      "collaborator_ids": [],
+      "priority": null,
+      "satisfaction_rating": null,
+      "type": null,
+      "status": "closed",
+      "description": "No matches here",
+      "tags": [],
+      "forum_topic_id": null,
+      "organization_id": null,
+      "due_at": null,
+      "requester_id": 794930541,
+      "followup_ids": [],
+      "recipient": "woistdieanleitung@manualone.com",
+      "problem_id": null,
+      "url": "https://manualone.zendesk.com/api/v2/tickets/3.json",
+      "fields": [],
+      "created_at": "2015-04-22T14:14:28Z",
+      "raw_subject": "A ticket with no match",
+      "has_incidents": false,
+      "group_id": 24343562,
+      "external_id": null
+    }
+  ],
+  "count": 3,
+  "next_page": null,
+  "previous_page": null
+}

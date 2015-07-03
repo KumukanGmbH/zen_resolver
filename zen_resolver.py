@@ -37,6 +37,11 @@ class ZenResolver(object):
     >>> s.mark_resolved(matches=s.process())
     423 6dce72d9-6375-41a6-90fc-f6ffdcd81fb6 {'name': u'JaneundKarsten', 'email': u'janeundkarsten@gmx.de'}
     """
+    output_files = {
+        'tickets': 'tickets.json',
+        'users': 'users.json',
+    }
+
     def __init__(self, **kwargs):
         self.DEBUG = kwargs.get('DEBUG', True)
         self.query_zendesk = kwargs.get('query_zendesk', False)
@@ -60,22 +65,24 @@ class ZenResolver(object):
 
     @property
     def tickets(self):
-        if os.path.exists('tickets.json') is True and self.query_zendesk is False:
-            resp = json.load(open('tickets.json', 'r'))
+        filename = self.output_files.get('tickets')
+        if os.path.exists(filename) is True and self.query_zendesk is False:
+            resp = json.load(open(filename, 'r'))
         else:
             resp = self.client.tickets_list(get_all_pages=True)
-            with open('tickets.json', 'w+') as fname:
+            with open(filename, 'w+') as fname:
                 fname.write(json.dumps(resp))
 
         return resp.get('tickets', [])
 
     @property
     def users(self):
-        if os.path.exists('users.json') is True and self.query_zendesk is False:
-            resp = json.load(open('users.json', 'r'))
+        filename = self.output_files.get('users')
+        if os.path.exists(filename) is True and self.query_zendesk is False:
+            resp = json.load(open(filename, 'r'))
         else:
             resp = self.client.users_list(get_all_pages=True)
-            with open('users.json', 'w+') as fname:
+            with open(filename, 'w+') as fname:
                 fname.write(json.dumps(resp))
 
         return resp.get('users', [])
