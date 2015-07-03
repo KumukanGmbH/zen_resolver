@@ -10,8 +10,8 @@ Basic Usage:
 in your .bashrc
 
 ```
-export ZENDESK_URL=https://manualone.zendesk.com/
-export ZENDESK_USERNAME=jane.gerling@kumukan.com/token
+export ZENDESK_URL=https://yoursite.zendesk.com/
+export ZENDESK_USERNAME=tomdickorharry@example.com/token
 export ZENDESK_TOKEN=u7dDfGDaT2qKAKQYJongDO2qUdKwc1TmnanJwc32
 ```
 
