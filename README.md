@@ -7,6 +7,13 @@ Class to allow the marking of zendesk tickets solved when we find the appropriat
 Basic Usage:
 ------------
 
+in your .bashrc
+
+export ZENDESK_URL=https://manualone.zendesk.com/
+export ZENDESK_USERNAME=jane.gerling@kumukan.com/token
+export ZENDESK_TOKEN=u7dDfGDaT2qKAKQYJongDO2qUdKwc1TmnanJwc32
+
+
 ```
 # Note the DEBUG=False this will actull mark as resolved at zendesk
 >>> s = ZenResolver(product_uuids=['6dce72d9-6375-41a6-90fc-f6ffdcd81fb6'], DEBUG=False)

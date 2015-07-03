@@ -10,6 +10,9 @@ logger = logging.getLogger('zen-resolver')
 logger.setLevel(logging.DEBUG)
 fh = logging.FileHandler('zen-resolver.log')
 fh.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 
 class ZenResolver(object):
@@ -45,9 +48,9 @@ class ZenResolver(object):
         self.matched_users = []
 
         zendesk = {
-            'zendesk_url': kwargs.get('zendesk_url', 'https://manualone.zendesk.com/'),
-            'username': kwargs.get('username', 'jane.gerling@kumukan.com/token'),
-            'token': kwargs.get('token', 'u7dDfGDaT2qKAKQYJongDO2qUdKwc1TmnanJwc65')
+            'zendesk_url': kwargs.get('zendesk_url', os.getenv('ZENDESK_URL')),
+            'username': kwargs.get('username', os.getenv('ZENDESK_USERNAME')),
+            'token': kwargs.get('token', os.getenv('ZENDESK_TOKEN'))
         }
 
         self.client = Zendesk(zendesk.get('zendesk_url'),
@@ -62,10 +65,11 @@ class ZenResolver(object):
         """
         update_ticket_ids = []
         for ticket_id, product_uuid, user_info in matches:
-            print ticket_id, product_uuid, user_info
             update_ticket_ids += [ticket_id]
 
         update_ticket_data = {'ticket': {'status': 'solved'}}
+
+        logger.info('Will be marking these tickets as resolved: %s' % update_ticket_ids)
 
         if update_ticket_ids and self.DEBUG is False:
             self.client.tickets_update_many(ids=update_ticket_ids,
@@ -103,14 +107,18 @@ class ZenResolver(object):
             subject = ticket.get('subject')
             description = ticket.get('description')
 
+            logger.debug('Trying to match for TicketId: %s and RequesterId: %s' % (ticket['id'], ticket.get('requester_id')))
             matched_product_uuid = [target for target in self.target_product_uuids if target in subject or target in description]
 
             if matched_product_uuid:
                 rid = ticket.get('requester_id')
                 if rid:  # because sometimes there is no requestor
+                    logger.debug('Match found for TicketId: %s and RequesterId: %s' % (ticket['id'], ticket.get('requester_id')))
                     self.matched_tickets += [ticket['id']]
                     self.matched_requesters += [ticket['requester_id']]
                     self.matched_products += matched_product_uuid
+                else:
+                    logger.debug('RequesterId: %s was invalid' % ticket.get('requester_id'))
 
     def match_users(self):
         """
