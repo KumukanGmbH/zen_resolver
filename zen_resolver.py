@@ -66,6 +66,7 @@ class ZenResolver(object):
     @property
     def tickets(self):
         filename = self.output_files.get('tickets')
+        logger.debug('Reading tickets: %s' % filename)
         if os.path.exists(filename) is True and self.query_zendesk is False:
             resp = json.load(open(filename, 'r'))
         else:
@@ -78,6 +79,7 @@ class ZenResolver(object):
     @property
     def users(self):
         filename = self.output_files.get('users')
+        logger.debug('Reading users: %s' % filename)
         if os.path.exists(filename) is True and self.query_zendesk is False:
             resp = json.load(open(filename, 'r'))
         else:

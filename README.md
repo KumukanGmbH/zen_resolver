@@ -33,3 +33,13 @@ from zen_resolver import ZenResolver
 ```
 
 logs to zen-resolver.log
+
+
+Testing
+-------
+
+Run
+
+```
+py.test tests/
+```
