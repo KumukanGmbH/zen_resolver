@@ -22,7 +22,8 @@ in main.py
 from zen_resolver import ZenResolver
 
 # Note the DEBUG=False this will actull mark as resolved at zendesk
->>> s = ZenResolver(product_uuids=['6dce72d9-6375-41a6-90fc-f6ffdcd81fb6'], DEBUG=False)
+# Note: Change debug=False if you actually want to update the tickets at zendesk
+>>> s = ZenResolver(product_uuids=['6dce72d9-6375-41a6-90fc-f6ffdcd81fb6'], DEBUG=True)
 
 >>> print s.process()  # get the tuple of those to be affected, (ticket_id, product_uuid, user_info)
 [(423, '6dce72d9-6375-41a6-90fc-f6ffdcd81fb6', {'name': u'JaneundKarsten', 'email': u'janeundkarsten@gmx.de'}), ...]

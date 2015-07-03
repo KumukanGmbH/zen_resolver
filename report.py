@@ -45,7 +45,7 @@ def get_user(user_id):
         import pdb;pdb.set_trace()
         return user
 
-    return None
+    return {}
 
 
 def get_product(product_uuid):
@@ -58,28 +58,29 @@ def get_product(product_uuid):
             data = resp.json()
             products[data.get('uuid')] = data
             return data
-    return None
+    return {}
 
 
 f = csv.writer(open("report.csv", "wb+"))
 
 # Write CSV Header
-f.writerow(['Zendesk Ticket Nr', 'Anfrage eingegangen am', 'Ticket status', 'Ticket Recipient', 'User Name', 'User E-Mail', 'Brand', 'Product Name', 'Product UUID'])
+f.writerow(['Zendesk Ticket Nr', 'Anfrage eingegangen am', 'Ticket status', 'Ticket Recipient', 'Subject', 'User Name', 'User E-Mail', 'Brand', 'Product Name', 'Product UUID'])
 
 for ticket in tickets.get('tickets'):
     product_uuid = get_product_uuids([ticket])
     for uuid in product_uuid:
         product = get_product(uuid)
-        if product:
-            user = get_user(ticket['requester_id'])
+        #if product:
+        user = get_user(ticket['requester_id'])
 
-            f.writerow([ticket['id'],
-                        ticket['created_at'],
-                        ticket['status'],
-                        ticket['recipient'],
-                        user.get('name', user.get('url', 'None')).encode('utf-8'),
-                        user.get('email', user.get('name', user.get('url', 'None'))).encode('utf-8'),
-                        product["brand"]["name"].encode('utf-8'),
-                        product["name"].encode('utf-8'),
-                        product["uuid"]])
+        f.writerow([ticket['id'],
+                    ticket['created_at'],
+                    ticket['status'],
+                    ticket['recipient'].encode('utf-8'),
+                    ticket['subject'].encode('utf-8'),
+                    user.get('name', user.get('url', 'None')).encode('utf-8'),
+                    user.get('email', user.get('name', user.get('url', 'None'))).encode('utf-8'),
+                    product["brand"]["name"].encode('utf-8'),
+                    product["name"].encode('utf-8'),
+                    product["uuid"]])
 
