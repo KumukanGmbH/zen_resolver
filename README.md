@@ -32,7 +32,16 @@ from zen_resolver import ZenResolver
 423 6dce72d9-6375-41a6-90fc-f6ffdcd81fb6 {'name': u'JackAndJill', 'email': u'jackandjill@ranupthehill.net'}
 ```
 
+Loggin:
+-------
+
 logs to zen-resolver.log
+
+
+Report for Jane
+---------------
+
+python report.py
 
 
 Testing

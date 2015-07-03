@@ -19,6 +19,7 @@ zendesk = {
 
 client = Zendesk(zendesk.get('zendesk_url'), zendesk.get('username'), zendesk.get('token'))
 
+
 def get_product_uuids(tickets):
     for t in tickets:
         match = set(pattern.findall(t['description']))
