@@ -145,8 +145,3 @@ class ZenResolver(object):
         return zip(self.matched_tickets,
                    self.matched_products,
                    self.matched_requesters)
-
-
-s = ZenResolver(product_uuids=['6dce72d9-6375-41a6-90fc-f6ffdcd81fb6'])
-s.mark_resolved(matches=s.process())
-#print s.process()
