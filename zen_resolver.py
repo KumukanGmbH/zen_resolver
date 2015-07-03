@@ -58,23 +58,6 @@ class ZenResolver(object):
                               zendesk.get('token'))
         logger.info('Initialized with kwargs: %s zendesk: %s' % (kwargs, zendesk))
 
-    def mark_resolved(self, matches):
-        """
-        Update the zendesk ticket_ids mark as solved and trigger the auto
-        responses
-        """
-        update_ticket_ids = []
-        for ticket_id, product_uuid, user_info in matches:
-            update_ticket_ids += [ticket_id]
-
-        update_ticket_data = {'ticket': {'status': 'solved'}}
-
-        logger.info('Will be marking these tickets as resolved: %s' % update_ticket_ids)
-
-        if update_ticket_ids and self.DEBUG is False:
-            self.client.tickets_update_many(ids=update_ticket_ids,
-                                            data=update_ticket_data)
-
     @property
     def tickets(self):
         if os.path.exists('tickets.json') is True and self.query_zendesk is False:
@@ -97,7 +80,7 @@ class ZenResolver(object):
 
         return resp.get('users', [])
 
-    def match_tickets(self):
+    def __match_tickets(self):
         """
         Build a set of ticket_id requester_id and product_uuid to act apon
         may need to ensure that the tickets.json is up to date,
@@ -120,7 +103,7 @@ class ZenResolver(object):
                 else:
                     logger.debug('RequesterId: %s was invalid' % ticket.get('requester_id'))
 
-    def match_users(self):
+    def __match_users(self):
         """
         Find the matching user details from each request
         may need to ensure that the users.json is up to date,
@@ -133,14 +116,31 @@ class ZenResolver(object):
                 for i in indices:
                     self.matched_requesters[i] = {'name':user['name'], 'email': user['email']}
 
+    def mark_resolved(self, matches):
+        """
+        Update the zendesk ticket_ids mark as solved and trigger the auto
+        responses
+        """
+        update_ticket_ids = []
+        for ticket_id, product_uuid, user_info in matches:
+            update_ticket_ids += [ticket_id]
+
+        update_ticket_data = {'ticket': {'status': 'solved'}}
+
+        logger.info('Will be marking these tickets as resolved: %s' % update_ticket_ids)
+
+        if update_ticket_ids and self.DEBUG is False:
+            self.client.tickets_update_many(ids=update_ticket_ids,
+                                            data=update_ticket_data)
+
     def process(self):
         """
         Primary process call
         returns a tuple of tuples: (ticket_id, product_uuid, user_info)
         [(423, '6dce72d9-6375-41a6-90fc-f6ffdcd81fb6', {'name': u'JaneundKarsten', 'email': u'janeundkarsten@gmx.de'}), ...]
         """
-        self.match_tickets()
-        self.match_users()
+        self.__match_tickets()
+        self.__match_users()
 
         return zip(self.matched_tickets,
                    self.matched_products,
