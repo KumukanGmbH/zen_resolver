@@ -15,7 +15,12 @@ export ZENDESK_USERNAME=jane.gerling@kumukan.com/token
 export ZENDESK_TOKEN=u7dDfGDaT2qKAKQYJongDO2qUdKwc1TmnanJwc32
 ```
 
+in main.py
+
 ```
+# -*- coding: utf-8 -*-
+from zen_resolver import ZenResolver
+
 # Note the DEBUG=False this will actull mark as resolved at zendesk
 >>> s = ZenResolver(product_uuids=['6dce72d9-6375-41a6-90fc-f6ffdcd81fb6'], DEBUG=False)
 
