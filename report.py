@@ -93,7 +93,7 @@ for ticket in tickets.get('tickets'):
                 subject,
                 user.get('name', user.get('url', 'None')).encode('utf-8'),
                 user.get('email', user.get('name', user.get('url', 'None'))).encode('utf-8'),
-                product.get("brand", {}).get("name", '').encode('utf-8'),
+                product.get("brand", {}).get("name", 'None').encode('utf-8'),
                 product.get("name", 'None').encode('utf-8'),
                 product.get("uuid", 'None')])
 
