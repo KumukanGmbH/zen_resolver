@@ -63,7 +63,16 @@ def get_product(product_uuid):
 f = csv.writer(open("report.csv", "wb+"))
 
 # Write CSV Header
-f.writerow(['Zendesk Ticket Nr', 'Anfrage eingegangen am', 'Ticket status', 'Ticket Recipient', 'Subject', 'User Name', 'User E-Mail', 'Brand', 'Product Name', 'Product UUID'])
+f.writerow(['Zendesk Ticket Nr',
+            'Anfrage eingegangen am',
+            'Ticket status',
+            'Ticket Recipient',
+            'Subject',
+            'User Name',
+            'User E-Mail',
+            'Brand',
+            'Product Name',
+            'Product UUID'])
 
 for ticket in tickets.get('tickets'):
     product_uuid = get_product_uuids([ticket])
@@ -72,11 +81,13 @@ for ticket in tickets.get('tickets'):
         #if product:  # uncomment this if you just want tickets with the product in the subject
         user = get_user(ticket['requester_id'])
 
+        subject = ' '.join(ticket['subject'].encode('utf-8').strip().splitlines()).replace(',', '').replace(';', '')
+
         f.writerow([ticket['id'],
                     ticket['created_at'],
                     ticket['status'],
                     ticket['recipient'].encode('utf-8'),
-                    ticket['subject'].encode('utf-8'),
+                    subject,
                     user.get('name', user.get('url', 'None')).encode('utf-8'),
                     user.get('email', user.get('name', user.get('url', 'None'))).encode('utf-8'),
                     product["brand"]["name"].encode('utf-8'),
