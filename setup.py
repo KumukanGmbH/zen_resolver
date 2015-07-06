@@ -11,7 +11,6 @@ setup(
     license = "GPL",
     keywords = "",
     url = "https://github.com/KumukanGmbH/zen_resolver",
-    packages=['zdesk'],
     install_requires = [
         'zdesk',  # must refer to package version explicitly **required**
         'requests',
