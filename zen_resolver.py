@@ -38,8 +38,8 @@ class ZenResolver(object):
     423 6dce72d9-6375-41a6-90fc-f6ffdcd81fb6 {'name': u'JaneundKarsten', 'email': u'janeundkarsten@gmx.de'}
     """
     output_files = {
-        'tickets': 'tickets.json',
-        'users': 'users.json',
+        'tickets': os.path.abspath('tickets.json'),
+        'users': os.path.abspath('users.json'),
     }
 
     def __init__(self, **kwargs):
@@ -127,20 +127,28 @@ class ZenResolver(object):
 
     def mark_resolved(self, matches):
         """
-        Update the zendesk ticket_ids mark as solved and trigger the auto
-        responses
+        Resolve the zendesk tickets from our tuple
         """
         update_ticket_ids = []
         for ticket_id, product_uuid, user_info in matches:
             update_ticket_ids += [ticket_id]
 
-        update_ticket_data = {'ticket': {'status': 'solved'}}
+        self.resolve(tickets=update_ticket_ids)
 
-        logger.info('Will be marking these tickets as resolved: %s' % update_ticket_ids)
+    def resolve(self, tickets):
+        """
+        Update the zendesk ticket_ids mark as solved and trigger the auto
+        responses
+        """
+        logger.info('Will be marking these tickets as resolved: %s' % tickets)
 
-        if update_ticket_ids and self.DEBUG is False:
-            self.client.tickets_update_many(ids=update_ticket_ids,
-                                            data=update_ticket_data)
+        update_ticket_data = {'tickets': [{'id': ticket_id, 'status': 'solved'} for ticket_id in tickets]}
+
+        response = None
+
+        if tickets and self.DEBUG is False:
+            response = self.client.tickets_update_many(data=update_ticket_data)
+        return response
 
     def process(self):
         """
