@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from zen_resolver import ZenResolver
+
 from zdesk import Zendesk
 import requests
 import os
@@ -18,6 +20,12 @@ zendesk = {
 }
 
 client = Zendesk(zendesk.get('zendesk_url'), zendesk.get('username'), zendesk.get('token'))
+
+#
+# Update the tickets.json
+#
+s = ZenResolver(query_zendesk=True)
+s.tickets  # get the tuple of those to be affected, (ticket_id, product_uuid, user_info)
 
 
 def get_product_uuid(ticket):
