@@ -70,6 +70,7 @@ class ZenResolver(object):
         if os.path.exists(filename) is True and self.query_zendesk is False:
             resp = json.load(open(filename, 'r'))
         else:
+            logger.debug('Querying zendesk for updated tickets: %s' % filename)
             resp = self.client.tickets_list(get_all_pages=True)
             with open(filename, 'w+') as fname:
                 fname.write(json.dumps(resp))
