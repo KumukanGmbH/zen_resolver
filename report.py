@@ -7,6 +7,7 @@ import os
 import re
 import csv
 import json
+import datetime
 
 pattern = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
 
@@ -25,7 +26,8 @@ client = Zendesk(zendesk.get('zendesk_url'), zendesk.get('username'), zendesk.ge
 # Update the tickets.json
 #
 s = ZenResolver(query_zendesk=True)
-s.tickets  # get the tuple of those to be affected, (ticket_id, product_uuid, user_info)
+s.tickets
+s.users
 
 
 def get_product_uuid(ticket):
@@ -71,7 +73,12 @@ def get_product(product_uuid):
     return {}
 
 
-f = csv.writer(open("report.csv", "wb+"))
+def report_filename():
+    d = datetime.datetime.utcnow()
+    epoch = datetime.datetime(1970, 1, 1)
+    return 'report-%s.csv' % int((d - epoch).total_seconds())
+
+f = csv.writer(open(report_filename(), "wb+"))
 
 # Write CSV Header
 f.writerow(['Zendesk Ticket Nr',
