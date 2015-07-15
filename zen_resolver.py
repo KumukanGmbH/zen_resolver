@@ -46,6 +46,11 @@ class ZenResolver(object):
         self.DEBUG = kwargs.get('DEBUG', True)
         self.query_zendesk = kwargs.get('query_zendesk', False)
 
+        #
+        # Allow for override
+        #
+        self._tickets = kwargs.get('tickets', [])
+
         self.target_product_uuids = kwargs.get('product_uuids', [])
         self.matched_tickets = []
         self.matched_products = []
@@ -65,6 +70,12 @@ class ZenResolver(object):
 
     @property
     def tickets(self):
+        #
+        # If there is an override
+        #
+        if self._tickets:
+            return self._tickets
+
         filename = self.output_files.get('tickets')
         logger.debug('Reading tickets: %s' % filename)
         if os.path.exists(filename) is True and self.query_zendesk is False:
@@ -101,17 +112,20 @@ class ZenResolver(object):
             description = ticket.get('description')
 
             logger.debug('Trying to match for TicketId: %s and RequesterId: %s' % (ticket['id'], ticket.get('requester_id')))
+            #import pdb;pdb.set_trace()
             matched_product_uuid = [target for target in self.target_product_uuids if target in subject or target in description]
+
+            logger.debug('Matched: %s' % matched_product_uuid)
 
             if matched_product_uuid:
                 rid = ticket.get('requester_id')
-                if rid:  # because sometimes there is no requestor
+                if not rid:  # because sometimes there is no requestor
+                    logger.debug('RequesterId: %s was invalid' % ticket.get('requester_id'))
+                else:
                     logger.debug('Match found for TicketId: %s and RequesterId: %s' % (ticket['id'], ticket.get('requester_id')))
                     self.matched_tickets += [ticket['id']]
                     self.matched_requesters += [ticket['requester_id']]
                     self.matched_products += matched_product_uuid
-                else:
-                    logger.debug('RequesterId: %s was invalid' % ticket.get('requester_id'))
 
     def __match_users(self):
         """
